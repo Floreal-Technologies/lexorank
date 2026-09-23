@@ -1,0 +1,64 @@
+cabal-version: 3.4
+name: lexorank
+version: 0.1.0.0
+-- synopsis:
+-- description:
+license: LGPL-3.0-or-later
+license-file: LICENSE
+author: Feriel Choutri de Tarlé
+maintainer: feriel@choutri.eu
+-- copyright:
+category: Data
+build-type: Simple
+extra-doc-files:
+  CHANGELOG.md
+  README.md
+
+common extensions
+  default-extensions:
+    OverloadedRecordDot
+  default-language: GHC2024
+
+common ghc-options
+  ghc-options:
+    -Wall
+    -Widentities
+
+common rts-options
+  ghc-options:
+    -rtsopts
+    -threaded
+    -with-rtsopts=-N
+
+library
+  import: extensions
+  import: ghc-options
+  -- cabal-gild: discover src
+  exposed-modules:
+    LexoRank.Types.Rank
+
+  build-depends:
+    base ^>=4.22,
+    text,
+    text-display,
+
+  hs-source-dirs: src
+  default-language: GHC2024
+
+test-suite lexorank-test
+  import: extensions
+  import: ghc-options
+  import: rts-options
+  default-language: GHC2024
+  -- cabal-gild: discover test/ --exclude test/Main.hs
+  other-modules:
+  -- other-extensions:
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is: Main.hs
+  build-depends:
+    base,
+    lexorank,
+    tasty,
+    text,
+    tasty-hunit,
